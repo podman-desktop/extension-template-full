@@ -32,7 +32,7 @@ The tech stack for this extension template includes:
 * TypeScript
 * Svelte 5
 * TailwindCSS
-* Yarn
+* npm
 
 ## Architecture
 
@@ -51,9 +51,9 @@ To build and develop the extension, follow these steps:
 $ git clone https://github.com/containers/podman-desktop-extension-template-webview/
 ```
 
-2. Run `yarn install` to install all relevant packages:
+2. Run `npm install` to install all relevant packages:
 ```sh
-$ yarn install
+$ npm install
 ```
 
 3. Create a build:
@@ -61,13 +61,13 @@ $ yarn install
 Creating a build will generate all required files for Podman Desktop to load the extension:
 
 ```sh
-$ yarn build
+$ npm run build
 ```
 
 In the `package.json` and `vite.config.js` files, we create a directory in `/packages/backend/media` that contains all the webview components. You will see output like the following:
 
 ```sh
-$ yarn build
+$ npm run build
 ...
 [0] transforming...
 [0] ✓ 140 modules transformed.
@@ -84,43 +84,28 @@ $ yarn build
 [0] ../backend/media/index-ChFLTcUn.css                 116.79 kB
 [0] ../backend/media/index-B6Ge7rjZ.js                  125.62 kB │ map: 1,670.57 kB
 [0] ✓ built in 1.49s
-[0] yarn --cwd packages/frontend build exited with code 0
+[0] npm run -w packages/frontend build exited with code 0
 ✨  Done in 3.02s.
 ```
 
 These files will be loaded from the extension.
 
-Optionally, you can also use `yarn watch` to continuously rebuild after each change, without needing to re-run `yarn build`:
+Optionally, you can also use `npm run watch` to continuously rebuild after each change, without needing to re-run `npm build`:
 
 ```sh
-$ yarn watch
+$ npm run watch
 ```
 
-4. Load the extension temporarily within Podman Desktop:
+4. Load the extension within Podman Desktop:
 
-We will load the extension within Podman Desktop to test it. This requires cloning the [Podman Desktop repo](https://github.com/containers/podman-desktop):
+We will load the extension within Podman Desktop to test it. This requires Podman Desktop v1.17+
 
-```sh
-$ git clone https://github.com/containers/podman-desktop
-```
+1. Navigate to the settings and enable `Development Mode` for the `extensions`
+1. Click on the `extensions` nav item in the left navigation bar
+1. Go to the `Local extension` tab.
+1. Click on the 'Add a local folder...' button and select the path of the `packages/backend` folder of this extension and click OK.
+1. Now the extension is part of Podman Desktop and you can see it listed in the `installed` tab of the Extensions panel.
 
-Navigate to the directory:
-
-```sh
-$ cd podman-desktop
-```
-
-Run the `yarn install` command:
-
-```sh
-$ yarn install
-```
-
-Load the extension using the `yarn watch` command with an additional parameter to load the `backend` packaged data:
-
-```sh
-yarn watch --extension-folder ../podman-desktop-extension-template-webview/packages/backend
-```
 
 5. Confirm that the extension has been loaded:
 
@@ -136,17 +121,17 @@ We include additional tools to assist in development, which can be found in the 
 
 Formatter:
 ```sh
-$ yarn format:fix
+$ npm run format:fix
 ```
 
 Linter:
 ```sh
-$ yarn lint:fix
+$ npm run lint:fix
 ```
 
 Typechecker:
 ```sh
-$ yarn typecheck
+$ npm run typecheck
 ```
 
 ## Packaging and Publishing
