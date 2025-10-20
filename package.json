@@ -46,7 +46,7 @@
     "svelte": "^5.36.14",
     "svelte-check": "^3.8.5",
     "typescript": "5.5.4",
-    "vite": "7.1.5",
+    "vite": "7.1.11",
     "vitest": "^3.2.4"
   },
   "workspaces": [
