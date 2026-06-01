@@ -36,8 +36,8 @@
     "eslint-plugin-sonarjs": "^1.0.4",
     "prettier": "^3.3.3",
     "typescript": "5.5.4",
-    "vite": "8.0.6",
-    "vitest": "^2.1.9"
+    "vite": "8.0.7",
+    "vitest": "^4.1.0"
   },
   "dependencies": {
     "semver": "^7.6.3"
