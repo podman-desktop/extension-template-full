@@ -1,0 +1,8 @@
+excluded_attributes:
+ - openapi_specs
+ - container_setup
+ - dbt_project_config
+ - dbt_model_documentation
+ - dbt_data_tests
+ - dbt_project_structure
+ - repomix_config
