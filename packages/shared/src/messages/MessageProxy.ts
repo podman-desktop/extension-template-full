@@ -29,7 +29,6 @@ export interface ISubscribedMessage {
   body: any;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UnaryRPC = (...args: any[]) => Promise<unknown>;
 
 export function isMessageRequest(content: unknown): content is IMessageRequest {
@@ -128,6 +127,8 @@ export class RpcBrowser {
   }
 
   init() {
+    // Messages come from the Podman Desktop webview host, which has no stable origin to check.
+    // eslint-disable-next-line sonarjs/post-message
     this.window.addEventListener('message', (event: MessageEvent) => {
       const message = event.data;
       if (isMessageResponse(message)) {

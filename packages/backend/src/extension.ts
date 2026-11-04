@@ -2,7 +2,7 @@ import type { ExtensionContext } from '@podman-desktop/api';
 import * as extensionApi from '@podman-desktop/api';
 import fs from 'node:fs';
 import { RpcExtension } from '/@shared/src/messages/MessageProxy';
-import { helloWorldApi } from './api-impl';
+import { HelloWorldApiImpl } from './api-impl';
 
 /**
  * Below is the "typical" extension.ts file that is used to activate and deactrivate the extension.
@@ -31,10 +31,10 @@ export async function activate(extensionContext: ExtensionContext): Promise<void
 
   // TEMPORARY. This is a workaround to replace the src of the script tag in the index.html file so that links work correctly.
   // In the content <script type="module" crossorigin src="./index-RKnfBG18.js"></script> replaces src with webview.asWebviewUri
-  const scriptLink = indexHtml.match(/<script.*?src="(.*?)".*?>/g);
+  const scriptLink = indexHtml.match(/<script[^>]*src="[^"]*"[^>]*>/g);
   if (scriptLink) {
     scriptLink.forEach(link => {
-      const src = link.match(/src="(.*?)"/);
+      const src = /src="([^"]*)"/.exec(link);
       if (src) {
         const webviewSrc = panel.webview.asWebviewUri(
           extensionApi.Uri.joinPath(extensionContext.extensionUri, 'media', src[1]),
@@ -45,10 +45,10 @@ export async function activate(extensionContext: ExtensionContext): Promise<void
   }
 
   // TEMPORARY. We do the same for the css link
-  const cssLink = indexHtml.match(/<link.*?href="(.*?)".*?>/g);
+  const cssLink = indexHtml.match(/<link[^>]*href="[^"]*"[^>]*>/g);
   if (cssLink) {
     cssLink.forEach(link => {
-      const href = link.match(/href="(.*?)"/);
+      const href = /href="([^"]*)"/.exec(link);
       if (href) {
         const webviewHref = panel.webview.asWebviewUri(
           extensionApi.Uri.joinPath(extensionContext.extensionUri, 'media', href[1]),
@@ -63,8 +63,8 @@ export async function activate(extensionContext: ExtensionContext): Promise<void
 
   // We now register the 'api' for the webview to communicate to the backend
   const rpcExtension = new RpcExtension(panel.webview);
-  const HelloWorldApi = new helloWorldApi(extensionContext);
-  rpcExtension.registerInstance<helloWorldApi>(helloWorldApi, HelloWorldApi);
+  const helloWorldApi = new HelloWorldApiImpl(extensionContext);
+  rpcExtension.registerInstance<HelloWorldApiImpl>(HelloWorldApiImpl, helloWorldApi);
 }
 
 export async function deactivate(): Promise<void> {
