@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import podmanDesktop from '@podman-desktop/eslint-config';
 import importPlugin from 'eslint-plugin-import';
 import noNull from 'eslint-plugin-no-null';
 import redundantUndefined from 'eslint-plugin-redundant-undefined';
@@ -21,6 +22,7 @@ const compat = new FlatCompat({
 });
 
 export default defineConfig([
+  ...podmanDesktop,
   globalIgnores([
     '**/node_modules/**',
     '**/dist/**',
