@@ -69,7 +69,9 @@ export default defineConfig([
       },
       sourceType: 'module',
       parserOptions: {
-        project: ['packages/*/tsconfig.json'],
+        projectService: {
+          allowDefaultProject: ['types/*.d.ts'],
+        },
         extraFileExtensions: ['.svelte'],
       },
     },
