@@ -5,12 +5,14 @@ import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import podmanDesktop from '@podman-desktop/eslint-config';
+import tsParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
 import noNull from 'eslint-plugin-no-null';
 import redundantUndefined from 'eslint-plugin-redundant-undefined';
 import sonarjs from 'eslint-plugin-sonarjs';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
+import svelteParser from 'svelte-eslint-parser';
 import typescriptLint from 'typescript-eslint';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -68,6 +70,7 @@ export default defineConfig([
       sourceType: 'module',
       parserOptions: {
         project: ['packages/*/tsconfig.json'],
+        extraFileExtensions: ['.svelte'],
       },
     },
     rules: {
@@ -107,6 +110,7 @@ export default defineConfig([
       'sonarjs/no-duplicate-string': 'off',
       'sonarjs/no-empty-collection': 'off',
       'sonarjs/no-small-switch': 'off',
+      'sonarjs/deprecation': 'off',
       'redundant-undefined/redundant-undefined': 'error',
       'import/no-extraneous-dependencies': 'error',
     },
@@ -124,6 +128,18 @@ export default defineConfig([
       '@typescript-eslint/no-floating-promises': 'off',
       '@typescript-eslint/no-empty-function': 'off',
       'no-undef': 'off',
+    },
+  },
+  {
+    files: ['**/*.svelte'],
+    languageOptions: {
+      parser: svelteParser,
+      parserOptions: {
+        parser: tsParser,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
 ]);
